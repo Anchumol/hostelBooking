@@ -362,6 +362,9 @@ router.get('/logout',(req,res)=>{
   req.session.destroy();
   res.redirect('/')
 })
+router.get('/emergaency',(req,res)=>{
+res.render('admin/emergencyCervice')
+})
 router.get('/questions',(req,res)=>{
   var sql = "select * from message where shopid = ?"
   con.query(sql,[req.session.user.email],(err,row)=>{
@@ -372,6 +375,59 @@ router.get('/questions',(req,res)=>{
       res.render('admin/viewMessages',{messages:row,user})
     }
   })
+})
+router.get("/movementRecords",(req,res)=>{
+  var mail= req.session.user.email;
+  var sql="select * from movement where email=?"
+  con.query(sql,[mail],(err,row)=>{
+    if(err){
+      console.og(err)
+    }else{
+      var user = req.session.user;
+      res.render('admin/moveMents',{data:row,user})
+    }
+  })
+})
+router.get("/movementRecords",(req,res)=>{
+        var mail= req.session.user.email;
+        var user = req.session.user;
+      res.render('admin/emergencyCervice',{email,user})
+   
+})
+router.post('/addService',(req,res)=>{
+  if (!req.files) {
+    return res.status(400).send("No files are uploaded");
+  }
+  var image=req.files.uploaded_image;
+  var img_name = image.name;
+  var email=req.session.user.email;
+  var name=req.body.name;
+  var mob = req.body.mob;
+  var sql = "insert into service set ?"
+  if(image.mimetype == 'image/jpeg'||image.mimetype=='image/png'){
+    image.mv("public/images/service/"+ image.name,function(err){
+      if(err){
+        console.log(err)
+      }else{
+       var data ={
+        email,
+        img_name,
+        name,
+        mob
+
+       }
+        con.query(sql,data,(err,result)=>{
+          if(err){
+            console.log(err)
+          }else{
+            console.log("success")
+            res.redirect('/mechHome')
+          }
+        })
+      }
+    })
+  }
+  
 })
 module.exports = router;
 

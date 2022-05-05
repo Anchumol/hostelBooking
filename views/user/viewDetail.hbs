@@ -26,3 +26,22 @@
                           <img style="height: 400px;width:400px" src="/images/menu/{{menu}}" alt="">
                       </div>
 </div>
+<div style="height:40px;width:100%;background-color:black" >
+  <h1 style="text-align: center;color:white"> EMERGANCY SERVICE</h1>
+</div>
+<div>
+  <div class="row">
+    {{#each service}}
+    <div class="col-sm-3">
+      <div class="card" style="width: 18rem;">
+  <img src="/images/service/{{this.img_name}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{this.mob}}</h5>
+    <p class="card-text"><b>{{this.name}}</b></p>
+
+  </div>
+</div>
+    </div>
+    {{/each}}
+  </div>
+</div>

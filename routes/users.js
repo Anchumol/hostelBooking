@@ -244,7 +244,15 @@ router.get('/view/:mail',(req,res)=>{
         }else{
           var menu= row[0].menu;
           var user = req.session.user;
-          res.render('user/viewDetail',{result,user,menu,homePage:true})
+          var sql3 ="select * from service where email= ?"
+          con.query(sql3,[email],(err,service)=>{
+            if(err){
+              console.log(err)
+            }else{
+              res.render('user/viewDetail',{result,user,menu,homePage:true,service})
+            }
+          })
+          
         }
       })
      
@@ -273,8 +281,26 @@ router.post('/message',(req,res)=>{
       }
     })
 })
+router.get('/movement/:mail',(req,res)=>{
+  var mail = req.params.mail;
+  res.render('user/Movement',{mail})
+})
 router.post('/location',(req,res)=>{
   console.log(req.body)
+  
+})
+router.post('/addMovement',(req,res)=>{
+  console.log(req.body)
+  var data =req.body;
+  data.userName = req.session.user.email;
+  var sql="insert into movement set ?"
+  con.query(sql,data,(err,row)=>{
+    if(err){
+      console.log(err)
+    }else{
+      res.redirect('/users/')
+    }
+  })
   
 })
 

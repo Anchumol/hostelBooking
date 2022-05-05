@@ -1,0 +1,22 @@
+<table class="table table-striped">
+   <thead>
+    <tr>
+      <th scope="col">Time</th>
+      <th scope="col">Date</th>
+      <th scope="col">Place</th>
+      <th scope="col">Return Time</th>
+       <th scope="col">UserMail</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each data}}
+    <tr>
+      <th scope="row">{{this.time}}</th>
+      <td>{{this.date}}</td>
+      <td>{{this.place}}</td>
+      <td>{{this.returnTime}}</td>
+      <td>{{this.userName}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
